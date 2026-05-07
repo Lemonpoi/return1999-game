@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>重返雾霭：圣梅诺克站 · 第一章</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+@keyframes fadeIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes typewriter{from{width:0}to{width:100%}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes glow{0%,100%{box-shadow:0 0 5px rgba(201,168,76,.3)}50%{box-shadow:0 0 20px rgba(201,168,76,.6)}}
+@keyframes hit{0%{transform:translateX(0)}30%{transform:translateX(30px)}100%{transform:translateX(0)}}
+@keyframes fadeOut{0%{opacity:1}100%{opacity:0;transform:scale(1.1)}}
+@keyframes mist{0%{background-position:0 0}100%{background-position:100px 100px}}
+@keyframes slideIn{0%{transform:translateY(100px);opacity:0}100%{transform:translateY(0);opacity:1}}
+@keyframes energyPulse{0%,100%{text-shadow:0 0 5px #c9a84c}50%{text-shadow:0 0 20px #c9a84c,0 0 40px #e8d5a3}}
+body{font-family:'Georgia','Times New Roman',serif;background:#0d0d1a;min-height:100vh;display:flex;justify-content:center;align-items:center;overflow-x:hidden}
+.game-container{width:1100px;max-width:98vw;height:96vh;background:linear-gradient(145deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);border:2px solid #c9a84c;border-radius:8px;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(201,168,76,.15),inset 0 0 60px rgba(0,0,0,.5)}
+.game-container::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;z-index:1}
+.game-container::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,.6));pointer-events:none;z-index:1}
+.vignette{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.7));pointer-events:none;z-index:2}
+
+/* === HEADER === */
+.header{position:absolute;top:0;left:0;right:0;height:48px;background:linear-gradient(180deg,rgba(201,168,76,.15),transparent);border-bottom:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:10}
+.header-title{font-size:14px;color:#c9a84c;letter-spacing:4px;text-transform:uppercase;text-shadow:0 0 10px rgba(201,168,76,.3)}
+.header-title span{color:#e8d5a3}
+.header-energy{display:flex;align-items:center;gap:8px;font-size:14px;color:#e8d5a3}
+.energy-dots{display:flex;gap:4px}
+.energy-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(201,168,76,.4);background:rgba(201,168,76,.1);transition:all .4s}
+.energy-dot.filled{background:#c9a84c;box-shadow:0 0 10px rgba(201,168,76,.6),inset 0 0 4px rgba(255,255,255,.3);border-color:#e8d5a3}
+.energy-dot.ult-ready{animation:energyPulse 1s infinite}
+.header-turn{font-size:13px;color:#8899aa;letter-spacing:1px}
+
+/* === STORY OVERLAY === */
+.story-overlay{position:absolute;inset:0;z-index:20;display:none;flex-direction:column;justify-content:flex-end;padding:40px;background:linear-gradient(0deg,rgba(0,0,0,.9) 0%,rgba(0,0,0,.5) 50%,rgba(0,0,0,.2) 100%);pointer-events:none}
+.story-overlay.active{display:flex}
+.story-speaker{font-size:15px;color:#c9a84c;margin-bottom:6px;letter-spacing:2px;font-weight:bold;animation:fadeIn .5s;pointer-events:auto}
+.story-speaker::before{content:'▸ ';color:#e8d5a3}
+.story-text{font-size:17px;color:#e0d5c0;line-height:1.7;max-width:800px;text-shadow:0 1px 4px rgba(0,0,0,.8);min-height:80px;pointer-events:auto}
+.story-text .typing{display:inline;border-right:2px solid #c9a84c;animation:pulse .8s step-end infinite}
+.story-continue{position:absolute;bottom:20px;right:40px;color:#c9a84c;font-size:13px;opacity:0;animation:fadeIn .5s 1s forwards;pointer-events:auto;cursor:pointer}
+.story-continue:hover{color:#e8d5a3}
+.story-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:120px;color:rgba(201,168,76,.04);font-weight:bold;letter-spacing:20px;white-space:nowrap;pointer-events:none;z-index:-1}
+
+/* === BATTLE SCENE === */
+.battle-scene{position:absolute;inset:0;top:48px;display:none;z-index:5}
+.battle-scene.active{display:block}
+
+/* === BATTLE FIELD === */
+.battle-field{position:absolute;inset:60px 0 220px 0;display:flex;justify-content:space-between;align-items:center;padding:20px 40px}
+
+/* === ENEMY SIDE === */
+.enemy-side{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px}
+.enemy-unit{display:flex;flex-direction:column;align-items:center;gap:4px;animation:fadeIn .5s;transition:all .3s}
+.enemy-unit.dead{opacity:.3;animation:fadeOut .8s forwards}
+.enemy-icon{font-size:48px;filter:drop-shadow(0 0 10px rgba(100,200,100,.3));transition:all .3s}
+.enemy-icon.hit{animation:hit .4s}
+.enemy-name{font-size:12px;color:#99aabb;letter-spacing:1px}
+.enemy-hp-bar{width:120px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.enemy-hp-fill{height:100%;background:linear-gradient(90deg,#c0392b,#e74c3c);border-radius:3px;transition:width .5s}
+.enemy-hp-text{font-size:11px;color:#778899}
+.enemy-elite .enemy-icon{font-size:64px}
+.enemy-elite .enemy-hp-bar{width:160px}
+
+/* === ALLY SIDE === */
+.ally-side{flex:1;display:flex;flex-direction:column;align-items:center;gap:12px}
+.ally-unit{display:flex;flex-direction:column;align-items:center;gap:4px;animation:fadeIn .5s;position:relative}
+.ally-unit.attacking{animation:hit .5s}
+.ally-unit.damaged{animation:shake .4s}
+.ally-icon{font-size:44px;filter:drop-shadow(0 0 8px rgba(201,168,76,.2));transition:all .3s}
+.ally-name{font-size:12px;color:#c9a84c;letter-spacing:1px}
+.ally-hp-bar{width:100px;height:5px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;border:1px solid rgba(201,168,76,.2)}
+.ally-hp-fill{height:100%;background:linear-gradient(90deg,#27ae60,#2ecc71);border-radius:3px;transition:width .5s}
+.ally-hp-text{font-size:10px;color:#8899aa}
+.ally-buff{position:absolute;top:-8px;right:-8px;font-size:12px;animation:float 2s infinite}
+
+/* === VS DIVIDER === */
+.vs-divider{font-size:24px;color:rgba(201,168,76,.3);letter-spacing:4px;text-shadow:0 0 20px rgba(201,168,76,.2);animation:pulse 2s infinite;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+
+/* === CARD HAND === */
+.card-hand{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(0deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.4) 100%);border-top:1px solid rgba(201,168,76,.15);padding:10px 16px;z-index:10;overflow-y:auto}
+.card-hand .card-grid{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.card{width:168px;height:178px;border-radius:6px;padding:8px;cursor:pointer;transition:all .25s;position:relative;border:1px solid rgba(201,168,76,.2);background:linear-gradient(180deg,rgba(30,30,60,.95),rgba(20,20,40,.95));flex-shrink:0;user-select:none}
+.card:hover{transform:translateY(-6px);border-color:#c9a84c;box-shadow:0 8px 24px rgba(201,168,76,.2)}
+.card.selected{transform:translateY(-12px);border-color:#e8d5a3;box-shadow:0 0 20px rgba(201,168,76,.3),inset 0 0 20px rgba(201,168,76,.05)}
+.card.disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+.card.disabled:hover{transform:none;border-color:rgba(201,168,76,.2);box-shadow:none}
+.card-char{font-size:11px;color:#8899aa;letter-spacing:1px;margin-bottom:2px}
+.card-name{font-size:13px;color:#e8d5a3;font-weight:bold;margin-bottom:3px;letter-spacing:1px}
+.card-type{display:inline-block;font-size:10px;padding:1px 6px;border-radius:3px;margin-bottom:4px}
+.card-type.attack{background:rgba(192,57,43,.3);color:#e74c3c;border:1px solid rgba(192,57,43,.4)}
+.card-type.buff{background:rgba(46,204,113,.2);color:#2ecc71;border:1px solid rgba(46,204,113,.3)}
+.card-type.ultimate{background:rgba(201,168,76,.25);color:#c9a84c;border:1px solid rgba(201,168,76,.4);animation:glow 2s infinite}
+.card-desc{font-size:11px;color:#99aabb;line-height:1.4;margin-top:2px}
+.card-energy{position:absolute;bottom:4px;right:6px;font-size:10px;color:rgba(201,168,76,.5)}
+.card-badge{position:absolute;top:-4px;right:-4px;background:#c9a84c;color:#1a1a2e;font-size:9px;padding:1px 5px;border-radius:3px;font-weight:bold}
+.card-char-tag{font-size:10px;color:#667788;margin-bottom:1px}
+
+/* === ACTION BUTTONS === */
+.action-bar{position:absolute;bottom:228px;left:0;right:0;height:40px;display:flex;justify-content:center;align-items:center;gap:12px;z-index:11;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent)}
+.btn{font-family:'Georgia',serif;padding:8px 28px;border-radius:4px;border:1px solid #c9a84c;background:linear-gradient(180deg,rgba(201,168,76,.15),rgba(201,168,76,.05));color:#e8d5a3;font-size:14px;cursor:pointer;letter-spacing:2px;transition:all .3s}
+.btn:hover{background:linear-gradient(180deg,rgba(201,168,76,.3),rgba(201,168,76,.1));box-shadow:0 0 20px rgba(201,168,76,.2)}
+.btn:disabled{opacity:.3;cursor:not-allowed;box-shadow:none}
+.btn-primary{background:linear-gradient(180deg,rgba(201,168,76,.35),rgba(201,168,76,.15));border-color:#e8d5a3}
+.btn-primary:hover{background:linear-gradient(180deg,rgba(201,168,76,.5),rgba(201,168,76,.2))}
+.btn-danger{background:linear-gradient(180deg,rgba(192,57,43,.25),rgba(192,57,43,.1));border-color:#c0392b;color:#e74c3c}
+.btn-danger:hover{background:linear-gradient(180deg,rgba(192,57,43,.4),rgba(192,57,43,.15))}
+.btn-sm{padding:5px 14px;font-size:12px}
+
+/* === BATTLE LOG === */
+.battle-log{position:absolute;top:50px;right:12px;width:260px;max-height:180px;overflow-y:auto;z-index:8;pointer-events:none;background:rgba(0,0,0,.5);border:1px solid rgba(201,168,76,.1);border-radius:4px;padding:8px 10px}
+.battle-log::-webkit-scrollbar{width:3px}
+.battle-log::-webkit-scrollbar-thumb{background:rgba(201,168,76,.3);border-radius:2px}
+.log-entry{font-size:11px;color:#8899aa;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.03);animation:fadeIn .3s}
+.log-entry.log-damage{color:#e74c3c}
+.log-entry.log-heal{color:#2ecc71}
+.log-entry.log-buff{color:#c9a84c}
+.log-entry.log-ult{color:#e8d5a3;font-weight:bold}
+.log-entry.log-system{color:#667788;font-style:italic}
+
+/* === TRANSITION SCREEN === */
+.transition{position:absolute;inset:0;z-index:30;display:none;background:rgba(0,0,0,.85);justify-content:center;align-items:center;flex-direction:column;gap:20px}
+.transition.active{display:flex;animation:fadeIn .5s}
+.transition-title{font-size:28px;color:#c9a84c;letter-spacing:6px;text-shadow:0 0 30px rgba(201,168,76,.3)}
+.transition-sub{font-size:14px;color:#8899aa;letter-spacing:2px}
+.transition-btn{margin-top:16px}
+
+/* === MIST OVERLAY === */
+.mist-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(100,180,100,.03),transparent 60%);pointer-events:none;z-index:3;animation:mist 8s linear infinite}
+
+/* === ULTIMATE ANIMATION === */
+.ult-flash{position:absolute;inset:0;z-index:15;pointer-events:none;display:none;background:radial-gradient(circle at center,rgba(201,168,76,.4),transparent 70%)}
+.ult-flash.active{display:block;animation:fadeOut .6s forwards}
+
+/* === RESPONSIVE === */
+@media(max-width:800px){
+  .card{width:140px;height:160px}
+  .card-desc{font-size:10px}
+  .battle-log{width:180px;max-height:120px;right:6px;top:40px}
+  .enemy-icon{font-size:36px}
+  .enemy-elite .enemy-icon{font-size:48px}
+  .ally-icon{font-size:36px}
+  .story-overlay{padding:24px}
+  .story-text{font-size:15px}
+  .battle-field{padding:10px 16px;inset:40px 0 200px 0}
+  .card-hand{height:200px}
+  .action-bar{bottom:208px}
+}
+</style>
+</head>
+<body>
+
+<div class="game-container" id="app">
+  <div class="vignette"></div>
+  <div class="mist-overlay"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-title">重返雾霭 <span>·</span> 圣梅诺克站</div>
+    <div class="header-energy">
+      <span>能量</span>
+      <div class="energy-dots" id="energyDots">
+        <div class="energy-dot" data-i="0"></div>
+        <div class="energy-dot" data-i="1"></div>
+        <div class="energy-dot" data-i="2"></div>
+        <div class="energy-dot" data-i="3"></div>
+        <div class="energy-dot" data-i="4"></div>
+      </div>
+      <span id="energyText">0/5</span>
+    </div>
+    <div class="header-turn" id="turnText">第 0 回合</div>
+  </div>
+
+  <!-- STORY OVERLAY -->
+  <div class="story-overlay active" id="storyOverlay">
+    <div class="story-bg-text" id="storyBg">1999</div>
+    <div class="story-speaker" id="storySpeaker"></div>
+    <div class="story-text" id="storyText"></div>
+    <div class="story-continue" id="storyContinue">▸ 点击继续</div>
+  </div>
+
+  <!-- TRANSITION -->
+  <div class="transition" id="transition">
+    <div class="transition-title" id="transitionTitle"></div>
+    <div class="transition-sub" id="transitionSub"></div>
+    <button class="btn btn-primary transition-btn" id="transitionBtn" onclick="onTransitionClick()">继续</button>
+  </div>
+
+  <!-- BATTLE SCENE -->
+  <div class="battle-scene" id="battleScene">
+    <!-- Battle Log -->
+    <div class="battle-log" id="battleLog"></div>
+
+    <!-- Battle Field -->
+    <div class="battle-field" id="battleField">
+      <div class="ally-side" id="allySide"></div>
+      <div class="vs-divider">⚔</div>
+      <div class="enemy-side" id="enemySide"></div>
+    </div>
+
+    <!-- Action Bar -->
+    <div class="action-bar" id="actionBar">
+      <button class="btn btn-primary" id="btnPlay" onclick="onPlayCards()">执 行 回 合</button>
+      <button class="btn btn-sm" id="btnSkipLog" onclick="skipLog()" style="display:none">快 进</button>
+    </div>
+
+    <!-- Card Hand -->
+    <div class="card-hand" id="cardHand"></div>
+  </div>
+
+  <!-- Ultimate Flash -->
+  <div class="ult-flash" id="ultFlash"></div>
+</div>
+
+<script>
+// ============================================================
+//  DATA
+// ============================================================
+
+const CHARACTERS = [
+  {
+    id: 'teeth',
+    name: '掰掰牙齿',
+    title: '牙医助手',
+    emoji: '🦷',
+    hp: 800,
+    maxHp: 800,
+    atk: 100,
+    def: 40,
+    cards: [
+      {
+        name: '牙钻穿刺',
+        type: 'attack',
+        desc: '对单个敌人造成 120% 攻击力的伤害，附加「流血」(每回合损失8%攻击力的生命，2回合)',
+        use: (user, target, allEnemies, allies) => {
+          const dmg = Math.floor(user.atk * 1.2);
+          target.takeDamage(dmg);
+          target.addDebuff('流血', 2, user.atk * 0.08);
+          addLog(`🦷 掰掰牙齿使用「牙钻穿刺」→ ${target.name}，造成 ${dmg} 点伤害，附加流血`, 'log-damage');
+        }
+      },
+      {
+        name: '咬合强化',
+        type: 'buff',
+        desc: '自身接下来 2 次攻击暴击率 +30%，持续 3 回合',
+        use: (user, target, allEnemies, allies) => {
+          user.addBuff('暴击强化', 3, { critRate: 0.3, attacks: 2 });
+          addLog(`🦷 掰掰牙齿使用「咬合强化」—「咬合要整齐。」`, 'log-buff');
+        }
+      },
+      {
+        name: '齿痕洪流',
+        type: 'ultimate',
+        desc: '对全体敌人造成 250% 攻击力的伤害，50%概率附加「恐惧」(1回合无法行动)',
+        use: (user, target, allEnemies, allies) => {
+          showUltFlash();
+          allEnemies.forEach(e => {
+            if (e.hp <= 0) return;
+            const dmg = Math.floor(user.atk * 2.5);
+            e.takeDamage(dmg);
+            if (Math.random() < 0.5) {
+              e.addDebuff('恐惧', 1, 0);
+            }
+          });
+          addLog(`🦷✨ 掰掰牙齿 · 大招牌「齿痕洪流」— 无数发光牙齿虚影如暴雨砸落！全体敌人受到 ${Math.floor(user.atk * 2.5)} 点伤害！`, 'log-ult');
+        }
+      }
+    ]
+  },
+  {
+    id: 'call',
+    name: '打打电话',
+    title: '接线员',
+    emoji: '📞',
+    hp: 750,
+    maxHp: 750,
+    atk: 90,
+    def: 35,
+    cards: [
+      {
+        name: '跨频干扰',
+        type: 'attack',
+        desc: '对单个敌人造成 100% 攻击力的伤害，目标下次行动 20% 概率失败',
+        use: (user, target, allEnemies, allies) => {
+          const dmg = Math.floor(user.atk * 1.0);
+          target.takeDamage(dmg);
+          target.addDebuff('线路杂音', 1, 0.2);
+          addLog(`📞 打打电话使用「跨频干扰」→ ${target.name}，造成 ${dmg} 点伤害，附加线路杂音`, 'log-damage');
+        }
+      },
+      {
+        name: '线路增援',
+        type: 'buff',
+        desc: '全体队友攻击力 +20%，持续 2 回合',
+        use: (user, target, allEnemies, allies) => {
+          allies.forEach(a => a.addBuff('攻击提升', 2, { atkPct: 0.2 }));
+          addLog(`📞 打打电话使用「线路增援」—「线路接通了，别浪费话费。」`, 'log-buff');
+        }
+      },
+      {
+        name: '历史回响',
+        type: 'ultimate',
+        desc: '对全体敌人造成 220% 攻击力的伤害，回复全队 15% 已损失生命值',
+        use: (user, target, allEnemies, allies) => {
+          showUltFlash();
+          allEnemies.forEach(e => {
+            if (e.hp <= 0) return;
+            const dmg = Math.floor(user.atk * 2.2);
+            e.takeDamage(dmg);
+          });
+          allies.forEach(a => {
+            const lost = a.maxHp - a.hp;
+            const heal = Math.ceil(lost * 0.15);
+            a.hp = Math.min(a.maxHp, a.hp + heal);
+          });
+          addLog(`📞✨ 打打电话 · 大招牌「历史回响」— 拨号 0999，将军虚影降临！全体敌人 ${Math.floor(user.atk * 2.2)} 伤害，全队回复 15% 已损失生命！`, 'log-ult');
+        }
+      }
+    ]
+  },
+  {
+    id: 'write',
+    name: '写写小说',
+    title: '落魄小说家',
+    emoji: '📖',
+    hp: 700,
+    maxHp: 700,
+    atk: 85,
+    def: 30,
+    cards: [
+      {
+        name: '铅字弹幕',
+        type: 'attack',
+        desc: '对单个敌人造成 110% 攻击力的伤害',
+        use: (user, target, allEnemies, allies) => {
+          const dmg = Math.floor(user.atk * 1.1);
+          target.takeDamage(dmg);
+          addLog(`📖 写写小说使用「铅字弹幕」→ ${target.name}，造成 ${dmg} 点伤害`, 'log-damage');
+        }
+      },
+      {
+        name: '情节补完',
+        type: 'buff',
+        desc: '为一名队友恢复 18% 最大生命值，并附加「叙事护盾」(抵挡一次伤害，2回合)',
+        use: (user, target, allEnemies, allies) => {
+          const heal = Math.floor(target.maxHp * 0.18);
+          target.hp = Math.min(target.maxHp, target.hp + heal);
+          target.addBuff('叙事护盾', 2, { shield: true });
+          addLog(`📖 写写小说使用「情节补完」→ ${target.name}，恢复 ${heal} 生命，附加叙事护盾`, 'log-heal');
+        }
+      },
+      {
+        name: '最终章',
+        type: 'ultimate',
+        desc: '对全体敌人造成 230% 攻击力的伤害，并「沉默」全体 1 回合(无法使用增益牌)',
+        use: (user, target, allEnemies, allies) => {
+          showUltFlash();
+          allEnemies.forEach(e => {
+            if (e.hp <= 0) return;
+            const dmg = Math.floor(user.atk * 2.3);
+            e.takeDamage(dmg);
+            e.addDebuff('沉默', 1, 0);
+          });
+          addLog(`📖✨ 写写小说 · 大招牌「最终章」— 翻开禁忌段落，现实被文字覆盖！全体敌人 ${Math.floor(user.atk * 2.3)} 伤害，沉默 1 回合！`, 'log-ult');
+        }
+      }
+    ]
+  },
+  {
+    id: 'whip',
+    name: '鞭鞭尸体',
+    title: '亡灵使者',
+    emoji: '💀',
+    hp: 850,
+    maxHp: 850,
+    atk: 95,
+    def: 45,
+    cards: [
+      {
+        name: '白骨鞭笞',
+        type: 'attack',
+        desc: '对单个敌人造成 115% 攻击力的伤害，30% 概率附加「虚弱」(攻击力-15%，2回合)',
+        use: (user, target, allEnemies, allies) => {
+          const dmg = Math.floor(user.atk * 1.15);
+          target.takeDamage(dmg);
+          if (Math.random() < 0.3) {
+            target.addDebuff('虚弱', 2, { atkReduce: 0.15 });
+          }
+          addLog(`💀 鞭鞭尸体使用「白骨鞭笞」→ ${target.name}，造成 ${dmg} 点伤害` + (Math.random() < 0.3 ? '，附加虚弱' : ''), 'log-damage');
+        }
+      },
+      {
+        name: '亡灵低语',
+        type: 'buff',
+        desc: '自身恢复 20% 最大生命值，召唤「亡灵哨兵」(自身30%生命，抵挡一次攻击)',
+        use: (user, target, allEnemies, allies) => {
+          const heal = Math.floor(user.maxHp * 0.2);
+          user.hp = Math.min(user.maxHp, user.hp + heal);
+          user.addBuff('亡灵哨兵', 3, { sentinel: Math.floor(user.maxHp * 0.3) });
+          addLog(`💀 鞭鞭尸体使用「亡灵低语」— 恢复 ${heal} 生命，召唤亡灵哨兵`, 'log-buff');
+        }
+      },
+      {
+        name: '葬仪进行曲',
+        type: 'ultimate',
+        desc: '对全体敌人造成 240% 攻击力的伤害，为攻击最高角色附加「死祝」(下一次攻击伤害翻倍)',
+        use: (user, target, allEnemies, allies) => {
+          showUltFlash();
+          allEnemies.forEach(e => {
+            if (e.hp <= 0) return;
+            const dmg = Math.floor(user.atk * 2.4);
+            e.takeDamage(dmg);
+          });
+          const topAtk = allies.reduce((a,b) => a.atk > b.atk ? a : b);
+          topAtk.addBuff('死祝', 10, { doubleDmg: true });
+          addLog(`💀✨ 鞭鞭尸体 · 大招牌「葬仪进行曲」— 脊椎砸地，亡灵浪潮涌出！全体敌人 ${Math.floor(user.atk * 2.4)} 伤害，${topAtk.name} 获得「死祝」！`, 'log-ult');
+        }
+      }
+    ]
+  }
+];
+
+const ENEMIES = [
+  {
+    id: 'elite',
+    name: '雾霭缝合怪',
+    emoji: '👹',
+    hp: 2000,
+    maxHp: 2000,
+    atk: 80,
+    def: 20,
+    isElite: true
+  },
+  {
+    id: 'minion1',
+    name: '记忆碎片傀儡·左',
+    emoji: '👁',
+    hp: 600,
+    maxHp: 600,
+    atk: 50,
+    def: 10,
+    isElite: false
+  },
+  {
+    id: 'minion2',
+    name: '记忆碎片傀儡·右',
+    emoji: '👁',
+    hp: 600,
+    maxHp: 600,
+    atk: 50,
+    def: 10,
+    isElite: false
+  }
+];
+
+// ============================================================
+//  STORY
+// ============================================================
+
+const STORY = [
+  // INTRO
+  { speaker: '', text: '1999 年 12 月 31 日，深夜 11 点 47 分。', bg: '圣梅诺克站' },
+  { speaker: '', text: '站台上方的时钟停在了七年前——分针锈死在「8」的位置。灰绿色的雾从铁轨尽头涌来，像湿棉花一样堵住呼吸道。', bg: '圣梅诺克站' },
+  { speaker: '', text: '候车厅的玻璃碎了，长椅翻倒。角落里有一只半开的手提箱，露出 1980 年代的黑胶唱片——封面女人的眼睛被黑色记号笔涂成了两个实心圆。', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「别碰那个。那箱子上的雾最浓，碰了你的手会烂。」\n声音从柱子后面传来——酒红色卷发，黑色粗框眼镜，制服上缝满电话线路的补丁。她手里攥着一台老式旋转电话，听筒线拖在地上像一条死去的蛇。', bg: '圣梅诺克站' },
+  { speaker: '掰掰牙齿', text: '「可是她的牙齿还在微笑啊——门牙排列得很整齐，咬合关系完美。」\n银发少年蹲在长椅靠背上，嘴角露出虎牙，制服口袋里伸出生锈的镊子。', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「你能不能有一次不盯着别人的牙？」', bg: '圣梅诺克站' },
+  { speaker: '掰掰牙齿', text: '「牙齿是记忆最坚固的载体。骨头会烂，皮肤会化，但牙齿几千年都不会消失。你不觉得这很浪漫吗？」', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「我觉得你很吵。」', bg: '圣梅诺克站' },
+  { speaker: '写写小说', text: '「咳咳。」\n售票窗口方向传来声音。一个穿着磨破羊毛大衣的男人靠在坍塌了一半的售票台上，手里的羽毛笔在笔记本上不停划动，金色墨水的痕迹在空气中短暂停留又消散。', bg: '圣梅诺克站' },
+  { speaker: '写写小说', text: '「我在写一句话：『四个人在末日前夜相遇，像四枚被拔掉的牙齿，并排放在同一张手帕上。』——你们觉得这句怎么样？」', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「烂透了。」', bg: '圣梅诺克站' },
+  { speaker: '掰掰牙齿', text: '「很有画面感。但牙齿不会被拔掉，牙齿是自己脱落的——前者是暴力，后者是时间。这之间有本质区别。」', bg: '圣梅诺克站' },
+  { speaker: '', text: '写写小说抬起头，看了掰掰牙齿一眼，嘴角微微动了一下——不知道那是笑还是抽搐。\n然后，他们听到了脚步声。', bg: '圣梅诺克站' },
+  { speaker: '', text: '不是从铁轨方向传来的。是从地下——像有什么东西在站台的水泥层下面爬行。每一次震动，头顶的日光灯管就闪一下。', bg: '圣梅诺克站' },
+  { speaker: '鞭鞭尸体', text: '「来了。」\n没有人注意到她是从哪里出现的。黑色斗篷遮住大半张脸，灰白色的眼睛没有瞳孔。脊椎骨改造的长鞭拖在身后，末端的棺材钉划过地面，发出刺耳的摩擦声。', bg: '圣梅诺克站' },
+  { speaker: '鞭鞭尸体', text: '「雾霭里的东西嗅到活人了。该上路了——或者，该送它们上路了。」', bg: '圣梅诺克站' },
+  { speaker: '', text: '日光灯管彻底熄灭了。\n站台的水泥地面从正中央裂开一道缝，灰绿色的雾气像活物一样涌出来。雾气之中，一个巨大的轮廓正在升起——碎骨、破布、生锈的铁器被雾霭缝合在一起，形成三米高的人形怪物。', bg: '圣梅诺克站' },
+  { speaker: '', text: '它的胸口嵌着一块裂开的火车时刻表，表盘上指针疯狂转动。两侧，两个半透明的、由玻璃碎片拼成的人形傀儡凝聚成形。', bg: '圣梅诺克站' },
+  { speaker: '写写小说', text: '「我需要一个更合适的词来形容现在的场面……」', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「别想了，打架。」她单手把听筒举到耳边，「线路接通了。」', bg: '圣梅诺克站' },
+  { speaker: '掰掰牙齿', text: '「那颗怪物的牙——肯定不整齐。」他把镊子咬在嘴里，笑了。', bg: '圣梅诺克站' },
+  // BATTLE TRANSITION
+  { speaker: 'BATTLE', text: '', bg: '' },
+  // OUTRO
+  { speaker: '', text: '缝合怪的身体彻底崩塌了。碎骨和铁器哗啦啦地落了一地。那块摔碎的火车时刻表指针停在 11:59。', bg: '圣梅诺克站' },
+  { speaker: '', text: '灰绿色的雾霭贴着地面退缩，沿着裂缝回流。站台的灯光重新亮了起来——昏黄、疲惫，但稳定。', bg: '圣梅诺克站' },
+  { speaker: '掰掰牙齿', text: '「这颗不是雾霭生成的——是某个真人的牙齿。」他从残骸中捏起一颗发黄的臼齿，「大概是七年前某个乘客，被雾霭吞掉之后，只剩下这个了。」', bg: '圣梅诺克站' },
+  { speaker: '写写小说', text: '「一个人只剩下一颗牙。」他翻开笔记本写下了这句话。', bg: '圣梅诺克站' },
+  { speaker: '掰掰牙齿', text: '「不——一个人的记忆只留下了一颗牙。这才是重点。」他把牙齿慎重地收进口袋。', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「现在我们知道三件事。第一，雾霭有核心——这块表就是锚点。」她指着地上的时刻表碎片，「它应该还连着别的什么。第二，我们的能力对雾霭有效。怀旧者的记忆能量能撕裂雾霭——它大概也是一种记忆，某种谁都不愿记起的记忆。」', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「第三——」', bg: '圣梅诺克站' },
+  { speaker: '', text: '她没有说完。\n因为站台上的广播突然响了。', bg: '圣梅诺克站' },
+  { speaker: '', text: '那台锈蚀的喇叭发出一阵电流噪音——然后，萨克斯的声音流淌出来。慵懒、暧昧，像某个地下酒吧在凌晨三点的叹息。一首老歌，歌词含糊不清，像隔着一层水。', bg: '圣梅诺克站' },
+  { speaker: '', text: '音乐持续了四十五秒。然后，一个经过电子处理的声音从广播里传出来——不男不女，像从很深的井底传上来的：', bg: '圣梅诺克站' },
+  { speaker: '📻 广播', text: '「欢迎来到圣梅诺克站。下一班列车将在——1999 年 12 月 31 日，午夜十二点整，准时到站。请手持车票的乘客前往三号站台候车。请手持车票的乘客——」', bg: '圣梅诺克站' },
+  { speaker: '', text: '广播被一声尖锐的啸叫切断。然后，安静了。', bg: '圣梅诺克站' },
+  { speaker: '写写小说', text: '「我们没有车票。」', bg: '圣梅诺克站' },
+  { speaker: '', text: '没有人回应。\n但打打电话的目光落在了鞭鞭尸体的斗篷领口——那里露出了一小块皮肤，缝合痕迹之下，有一个灰绿色的螺旋形标记。和那块破碎的火车时刻表上刻着的花纹一模一样。', bg: '圣梅诺克站' },
+  { speaker: '', text: '她没有说出来。她只是把听筒提起来又放下去，重复了两次。', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「不管怎样，午夜还没到。我们还有十三分钟。」', bg: '圣梅诺克站' },
+  { speaker: '掰掰牙齿', text: '「十三分钟够我再检查一下这颗牙的牙釉质厚度了。」', bg: '圣梅诺克站' },
+  { speaker: '打打电话', text: '「你能不能——」', bg: '圣梅诺克站' },
+  { speaker: '掰掰牙齿', text: '「不能。」', bg: '圣梅诺克站' },
+  { speaker: '', text: '站台上的时钟依然停在「8」的位置。\n但秒针，不知从什么时候开始，动了一下。', bg: '圣梅诺克站' },
+  { speaker: 'END', text: '', bg: '' }
+];
+
+// ============================================================
+//  UNIT CLASSES
+// ============================================================
+
+class Unit {
+  constructor(data, isAlly) {
+    this.id = data.id;
+    this.name = data.name;
+    this.title = data.title || '';
+    this.emoji = data.emoji;
+    this.hp = data.hp;
+    this.maxHp = data.maxHp;
+    this.atk = data.atk;
+    this.def = data.def;
+    this.isAlly = isAlly;
+    this.isElite = data.isElite || false;
+    this.baseAtk = data.atk;
+    this.buffs = [];
+    this.debuffs = [];
+    this.cards = data.cards ? data.cards.map(c => ({...c})) : [];
+  }
+
+  takeDamage(amount) {
+    const actual = Math.max(1, amount - Math.floor(this.def * 0.2));
+    this.hp = Math.max(0, this.hp - actual);
+    return actual;
+  }
+
+  heal(amount) {
+    this.hp = Math.min(this.maxHp, this.hp + amount);
+  }
+
+  addBuff(name, duration, effect) {
+    const existing = this.buffs.find(b => b.name === name);
+    if (existing) {
+      existing.duration = Math.max(existing.duration, duration);
+      Object.assign(existing.effect, effect);
+    } else {
+      this.buffs.push({ name, duration, effect });
+    }
+  }
+
+  addDebuff(name, duration, effect) {
+    const existing = this.debuffs.find(d => d.name === name);
+    if (existing) {
+      existing.duration = Math.max(existing.duration, duration);
+      Object.assign(existing.effect, effect);
+    } else {
+      this.debuffs.push({ name, duration, effect });
+    }
+  }
+
+  getEffectiveAtk() {
+    let a = this.baseAtk;
+    this.buffs.forEach(b => {
+      if (b.effect.atkPct) a += Math.floor(this.baseAtk * b.effect.atkPct);
+    });
+    this.debuffs.forEach(d => {
+      if (d.effect.atkReduce) a = Math.floor(a * (1 - d.effect.atkReduce));
+    });
+    return a;
+  }
+
+  hasDebuff(name) {
+    return this.debuffs.some(d => d.name === name);
+  }
+
+  hasBuff(name) {
+    return this.buffs.some(b => b.name === name);
+  }
+
+  tickBuffs() {
+    this.buffs = this.buffs.filter(b => {
+      b.duration--;
+      return b.duration > 0;
+    });
+    this.debuffs = this.debuffs.filter(d => {
+      d.duration--;
+      return d.duration > 0;
+    });
+  }
+
+  tickDot() {
+    const bleed = this.debuffs.find(d => d.name === '流血');
+    if (bleed) {
+      const dmg = Math.floor(bleed.effect);
+      this.hp = Math.max(0, this.hp - dmg);
+      return dmg;
+    }
+    return 0;
+  }
+
+  isDead() { return this.hp <= 0; }
+
+  clone() {
+    const u = new Unit({
+      id: this.id,
+      name: this.name,
+      title: this.title,
+      emoji: this.emoji,
+      hp: this.hp,
+      maxHp: this.maxHp,
+      atk: this.atk,
+      def: this.def,
+      isElite: this.isElite,
+      cards: this.cards
+    }, this.isAlly);
+    u.buffs = JSON.parse(JSON.stringify(this.buffs));
+    u.debuffs = JSON.parse(JSON.stringify(this.debuffs));
+    return u;
+  }
+}
+
+// ============================================================
+//  GAME STATE
+// ============================================================
+
+let state = {
+  phase: 'story',
+  storyIndex: 0,
+  allies: [],
+  enemies: [],
+  energy: 0,
+  maxEnergy: 5,
+  turn: 0,
+  selectedCards: [],
+  isPlaying: false,
+  log: [],
+  isTyping: false,
+  skipTyping: false
+};
+
+// ============================================================
+//  DOM REFS
+// ============================================================
+
+const $ = id => document.getElementById(id);
+const storyOverlay = $('storyOverlay');
+const storySpeaker = $('storySpeaker');
+const storyText = $('storyText');
+const storyContinue = $('storyContinue');
+const battleScene = $('battleScene');
+const allySide = $('allySide');
+const enemySide = $('enemySide');
+const cardHand = $('cardHand');
+const battleLog = $('battleLog');
+const energyDots = $('energyDots');
+const energyText = $('energyText');
+const turnText = $('turnText');
+const btnPlay = $('btnPlay');
+const transition = $('transition');
+const transitionTitle = $('transitionTitle');
+const transitionSub = $('transitionSub');
+const transitionBtn = $('transitionBtn');
+const ultFlash = $('ultFlash');
+const storyBg = $('storyBg');
+
+// ============================================================
+//  LOG
+// ============================================================
+
+function addLog(text, cls = '') {
+  state.log.push(text);
+  const el = document.createElement('div');
+  el.className = `log-entry ${cls}`;
+  el.textContent = text;
+  battleLog.appendChild(el);
+  battleLog.scrollTop = battleLog.scrollHeight;
+}
+
+function clearLog() {
+  state.log = [];
+  battleLog.innerHTML = '';
+}
+
+// ============================================================
+//  ULT FLASH
+// ============================================================
+
+function showUltFlash() {
+  ultFlash.classList.add('active');
+  setTimeout(() => ultFlash.classList.remove('active'), 600);
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+
+function init() {
+  state.phase = 'story';
+  state.storyIndex = 0;
+  state.energy = 0;
+  state.turn = 0;
+  state.selectedCards = [];
+  state.isPlaying = false;
+  state.log = [];
+  state.isTyping = false;
+  state.skipTyping = false;
+
+  clearLog();
+  showStory();
+}
+
+// ============================================================
+//  STORY SYSTEM
+// ============================================================
+
+function showStory() {
+  battleScene.classList.remove('active');
+  storyOverlay.classList.add('active');
+  transition.classList.remove('active');
+
+  const idx = state.storyIndex;
+  if (idx >= STORY.length) return;
+
+  const s = STORY[idx];
+
+  if (s.speaker === 'BATTLE') {
+    startBattle();
+    return;
+  }
+  if (s.speaker === 'END') {
+    showEndScreen();
+    return;
+  }
+
+  storyBg.textContent = s.bg || '1999';
+  storySpeaker.textContent = s.speaker ? `${s.speaker}` : '';
+  storySpeaker.style.display = s.speaker ? 'block' : 'none';
+
+  state.isTyping = true;
+  state.skipTyping = false;
+  storyText.innerHTML = '';
+  storyContinue.style.display = 'none';
+
+  typeText(s.text, 0);
+}
+
+function typeText(text, i) {
+  if (state.skipTyping || i >= text.length) {
+    storyText.innerHTML = text.replace(/\n/g, '<br>');
+    state.isTyping = false;
+    storyContinue.style.display = 'block';
+    return;
+  }
+  if (text[i] === '\n') {
+    storyText.innerHTML += '<br>';
+    setTimeout(() => typeText(text, i + 1), 80);
+    return;
+  }
+  storyText.innerHTML += text[i];
+  const delay = text[i] === '「' || text[i] === '」' || text[i] === '。' || text[i] === '！' || text[i] === '？' ? 120 : 35;
+  setTimeout(() => typeText(text, i + 1), delay);
+}
+
+storyContinue.onclick = () => {
+  if (state.isTyping) {
+    state.skipTyping = true;
+    return;
+  }
+  state.storyIndex++;
+  showStory();
+};
+
+// ============================================================
+//  BATTLE INIT
+// ============================================================
+
+function startBattle() {
+  state.phase = 'battle';
+  state.turn = 0;
+  state.energy = 0;
+  state.selectedCards = [];
+
+  state.allies = CHARACTERS.map(c => new Unit({
+    id: c.id, name: c.name, title: c.title, emoji: c.emoji,
+    hp: c.hp, maxHp: c.maxHp, atk: c.atk, def: c.def,
+    cards: c.cards.map(card => ({...card}))
+  }, true));
+
+  state.enemies = ENEMIES.map(e => new Unit({
+    id: e.id, name: e.name, emoji: e.emoji,
+    hp: e.hp, maxHp: e.maxHp, atk: e.atk, def: e.def,
+    isElite: e.isElite
+  }, false));
+
+  storyOverlay.classList.remove('active');
+  battleScene.classList.add('active');
+  clearLog();
+
+  addLog('⚔ 战斗开始！雾霭缝合怪与它的傀儡出现了。', 'log-system');
+  addLog('「咬合要整齐。」——掰掰牙齿把镊子咬在嘴里，冲了出去。', 'log-system');
+
+  renderAll();
+  btnPlay.disabled = false;
+  startPlayerTurn();
+}
+
+// ============================================================
+//  TURN SYSTEM
+// ============================================================
+
+function startPlayerTurn() {
+  state.turn++;
+  state.selectedCards = [];
+  state.phase = 'player_turn';
+  turnText.textContent = `第 ${state.turn} 回合 · 出牌阶段`;
+  btnPlay.disabled = false;
+  btnPlay.textContent = '执 行 回 合';
+  renderAll();
+}
+
+function onPlayCards() {
+  if (state.phase !== 'player_turn' || state.isPlaying) return;
+  if (state.selectedCards.length === 0) {
+    addLog('⚠ 请先选择要使用的卡牌', 'log-system');
+    return;
+  }
+
+  state.isPlaying = true;
+  btnPlay.disabled = true;
+  state.phase = 'executing';
+
+  executeCards(0);
+}
+
+function executeCards(index) {
+  if (index >= state.selectedCards.length) {
+    // All cards played
+    state.isPlaying = false;
+    state.selectedCards = [];
+
+    // Tick dot effects on enemies
+    state.enemies.forEach(e => {
+      if (e.isDead()) return;
+      const dotDmg = e.tickDot();
+      if (dotDmg > 0) addLog(`💧 ${e.name} 受到流血伤害 ${dotDmg} 点`, 'log-damage');
+    });
+
+    renderAll();
+
+    // Check win
+    if (checkWin()) return;
+
+    // Enemy turn
+    setTimeout(() => enemyTurn(), 600);
+    return;
+  }
+
+  const sel = state.selectedCards[index];
+  const ally = state.allies.find(a => a.id === sel.charId);
+  const card = ally.cards[sel.cardIndex];
+
+  // Find target: for attack/ultimate target the lowest HP non-dead enemy
+  const aliveEnemies = state.enemies.filter(e => !e.isDead());
+  if (aliveEnemies.length === 0) {
+    executeCards(index + 1);
+    return;
+  }
+
+  let target = aliveEnemies[0];
+  if (card.type === 'attack' || card.type === 'ultimate') {
+    // Target the elite first for attacks
+    const elite = aliveEnemies.find(e => e.isElite);
+    if (elite) target = elite;
+    else target = aliveEnemies.reduce((a,b) => a.hp < b.hp ? a : b);
+  }
+  if (card.type === 'buff') {
+    // For single-target buffs, target self or lowest HP ally
+    if (ally.id === 'write') {
+      // Writer's heal targets lowest HP ally
+      const aliveAllies = state.allies.filter(a => !a.isDead());
+      target = aliveAllies.reduce((a,b) => a.hp / a.maxHp < b.hp / b.maxHp ? a : b);
+    } else {
+      target = ally;
+    }
+  }
+
+  // Apply card effects
+  card.use(ally, target, state.enemies, state.allies.filter(a => !a.isDead()));
+
+  // Energy gain (not for ultimate since it consumes)
+  if (card.type !== 'ultimate') {
+    state.energy = Math.min(state.maxEnergy, state.energy + 1);
+  } else {
+    state.energy = 0;
+  }
+
+  // Check for enemy deaths mid-chain
+  renderAll();
+
+  // Check win mid-chain
+  if (checkWin()) return;
+
+  setTimeout(() => executeCards(index + 1), 500);
+}
+
+function enemyTurn() {
+  state.phase = 'enemy_turn';
+  turnText.textContent = `第 ${state.turn} 回合 · 敌方阶段`;
+
+  const aliveAllies = state.allies.filter(a => !a.isDead());
+  const aliveEnemies = state.enemies.filter(e => !e.isDead());
+
+  if (aliveEnemies.length === 0 || aliveAllies.length === 0) {
+    startPlayerTurn();
+    return;
+  }
+
+  let delay = 0;
+
+  aliveEnemies.forEach((enemy, ei) => {
+    setTimeout(() => {
+      if (enemy.isDead()) return;
+      const aliveAlliesNow = state.allies.filter(a => !a.isDead());
+      if (aliveAlliesNow.length === 0) return;
+
+      // Check fear
+      const isFeared = enemy.hasDebuff('恐惧');
+      const hasNoise = enemy.hasDebuff('线路杂音');
+
+      if (isFeared) {
+        addLog(`😰 ${enemy.name} 陷入恐惧，无法行动！`, 'log-system');
+        enemy.tickBuffs();
+        renderAll();
+        return;
+      }
+
+      if (hasNoise && Math.random() < 0.2) {
+        addLog(`📡 ${enemy.name} 受到线路杂音干扰，行动失败！`, 'log-system');
+        enemy.tickBuffs();
+        renderAll();
+        return;
+      }
+
+      // Pick target (random alive ally)
+      const targets = state.allies.filter(a => !a.isDead());
+      const target = targets[Math.floor(Math.random() * targets.length)];
+
+      // Check shield
+      const shielded = target.hasBuff('叙事护盾');
+      const hasSentinel = target.hasBuff('亡灵哨兵');
+
+      let dmg = Math.floor(enemy.atk * (enemy.isElite ? 1.2 : 0.9));
+
+      if (shielded) {
+        const buff = target.buffs.find(b => b.name === '叙事护盾');
+        if (buff) buff.duration = 0;
+        addLog(`🛡 ${target.name} 的叙事护盾抵挡了 ${enemy.name} 的攻击！`, 'log-heal');
+        dmg = 0;
+      } else if (hasSentinel) {
+        const buff = target.buffs.find(b => b.name === '亡灵哨兵');
+        if (buff) {
+          const sentinelHp = buff.effect.sentinel || 0;
+          buff.duration = 0;
+          addLog(`💀 亡灵哨兵为 ${target.name} 抵挡了 ${enemy.name} 的攻击！（吸收 ${sentinelHp} 点伤害）`, 'log-buff');
+          dmg = Math.max(0, dmg - sentinelHp);
+        }
+      }
+
+      if (dmg > 0) {
+        const actual = target.takeDamage(dmg);
+        addLog(`${enemy.emoji} ${enemy.name} 攻击 ${target.name}，造成 ${actual} 点伤害！`, 'log-damage');
+      }
+
+      enemy.tickBuffs();
+      renderAll();
+
+      // Check lose
+      if (checkLose()) return;
+
+      // Last enemy, start next player turn
+      if (ei === aliveEnemies.length - 1) {
+        setTimeout(() => {
+          if (state.phase !== 'victory' && state.phase !== 'defeat') {
+            startPlayerTurn();
+          }
+        }, 500);
+      }
+    }, delay);
+    delay += 800;
+  });
+}
+
+// ============================================================
+//  WIN/LOSE
+// ============================================================
+
+function checkWin() {
+  const alive = state.enemies.filter(e => !e.isDead());
+  if (alive.length === 0) {
+    state.phase = 'victory';
+    addLog('🏆 战斗胜利！雾霭缝合怪被击败！', 'log-ult');
+    setTimeout(() => {
+      transitionTitle.textContent = '· 胜 利 ·';
+      transitionSub.textContent = '雾霭暂时退却，但秘密才刚刚浮现……';
+      transitionBtn.textContent = '继续剧情';
+      transition.classList.add('active');
+      window._transitionCb = () => {
+        transition.classList.remove('active');
+        state.storyIndex++;
+        showStory();
+      };
+    }, 800);
+    return true;
+  }
+  return false;
+}
+
+function checkLose() {
+  const alive = state.allies.filter(a => !a.isDead());
+  if (alive.length === 0) {
+    state.phase = 'defeat';
+    addLog('💀 全员倒下……', 'log-damage');
+    setTimeout(() => {
+      transitionTitle.textContent = '· 雾 霭 吞 噬 ·';
+      transitionSub.textContent = '记忆消散在灰绿色的浓雾中……';
+      transitionBtn.textContent = '重新开始';
+      transition.classList.add('active');
+      window._transitionCb = () => {
+        transition.classList.remove('active');
+        init();
+      };
+    }, 800);
+    return true;
+  }
+  return false;
+}
+
+function onTransitionClick() {
+  if (window._transitionCb) window._transitionCb();
+}
+
+// ============================================================
+//  END SCREEN
+// ============================================================
+
+function showEndScreen() {
+  battleScene.classList.remove('active');
+  storyOverlay.classList.remove('active');
+  transitionTitle.textContent = '· 第 一 章 · 完';
+  transitionSub.textContent = '「下一班列车将在午夜十二点到站。请手持车票的乘客——」';
+  transitionBtn.textContent = '重新开始';
+  transition.classList.add('active');
+  window._transitionCb = () => {
+    transition.classList.remove('active');
+    init();
+  };
+}
+
+// ============================================================
+//  SKIP LOG
+// ============================================================
+
+function skipLog() {
+  // Placeholder for skip functionality
+}
+
+// ============================================================
+//  RENDER
+// ============================================================
+
+function renderAll() {
+  renderAllies();
+  renderEnemies();
+  renderCards();
+  renderEnergy();
+}
+
+function renderAllies() {
+  allySide.innerHTML = '';
+  state.allies.forEach((ally, i) => {
+    const div = document.createElement('div');
+    div.className = 'ally-unit';
+    if (ally.isDead()) {
+      div.style.opacity = '0.3';
+    }
+    const pct = ally.hp / ally.maxHp;
+    div.innerHTML = `
+      <div class="ally-icon">${ally.emoji}</div>
+      <div class="ally-name">${ally.name}</div>
+      <div class="ally-hp-bar"><div class="ally-hp-fill" style="width:${pct*100}%;background:${pct > 0.5 ? 'linear-gradient(90deg,#27ae60,#2ecc71)' : pct > 0.25 ? 'linear-gradient(90deg,#e67e22,#f39c12)' : 'linear-gradient(90deg,#c0392b,#e74c3c)'}"></div></div>
+      <div class="ally-hp-text">${Math.max(0,ally.hp)}/${ally.maxHp}</div>
+      ${ally.buffs.length > 0 ? `<div class="ally-buff">${ally.buffs.map(b => b.name).join('·')}</div>` : ''}
+    `;
+    allySide.appendChild(div);
+  });
+}
+
+function renderEnemies() {
+  enemySide.innerHTML = '';
+  state.enemies.forEach((enemy, i) => {
+    const div = document.createElement('div');
+    div.className = `enemy-unit${enemy.isElite ? ' enemy-elite' : ''}`;
+    if (enemy.isDead()) {
+      div.classList.add('dead');
+    }
+    const pct = enemy.hp / enemy.maxHp;
+    const hpColor = pct > 0.5 ? '#2ecc71' : pct > 0.25 ? '#f39c12' : '#e74c3c';
+    div.innerHTML = `
+      <div class="enemy-icon">${enemy.emoji}</div>
+      <div class="enemy-name">${enemy.name}${enemy.debuffs.length > 0 ? ' ' + enemy.debuffs.map(d => `[${d.name}]`).join('') : ''}</div>
+      ${enemy.isElite ? '' : ''}
+      <div class="enemy-hp-bar"><div class="enemy-hp-fill" style="width:${pct*100}%;background:${hpColor}"></div></div>
+      <div class="enemy-hp-text">${Math.max(0,enemy.hp)}/${enemy.maxHp}</div>
+    `;
+    enemySide.appendChild(div);
+  });
+}
+
+function renderCards() {
+  cardHand.innerHTML = '';
+  if (state.phase === 'victory' || state.phase === 'defeat') return;
+  if (state.phase === 'enemy_turn') {
+    cardHand.innerHTML = '<div style="color:#667788;text-align:center;padding:40px;font-size:16px;letter-spacing:2px">敌方回合·等待中</div>';
+    return;
+  }
+
+  const grid = document.createElement('div');
+  grid.className = 'card-grid';
+
+  const canAct = state.allies.filter(a => !a.isDead());
+  const isPlayerTurn = state.phase === 'player_turn' && !state.isPlaying;
+  const maxSelect = canAct.length;
+  const remaining = maxSelect - state.selectedCards.length;
+
+  state.allies.forEach((ally, ai) => {
+    if (ally.isDead()) return;
+    ally.cards.forEach((card, ci) => {
+      const isUlt = card.type === 'ultimate';
+      const canUseUlt = state.energy >= state.maxEnergy && isUlt;
+      const isNormal = !isUlt;
+      const disabled = !isPlayerTurn || (isUlt && !canUseUlt) || (isNormal && state.energy >= state.maxEnergy && !state.selectedCards.some(s => s.cardType === 'ultimate'));
+      const isSelected = state.selectedCards.some(s => s.charId === ally.id && s.cardIndex === ci);
+
+      // If energy is full, only ultimate cards can be newly selected (but already selected normal cards stay)
+      const energyFull = state.energy >= state.maxEnergy;
+      const canSelect = isPlayerTurn && !state.isPlaying;
+      const wouldExceed = state.selectedCards.length >= maxSelect && !isSelected;
+
+      const cardEl = document.createElement('div');
+      cardEl.className = `card${isSelected?' selected':''}${(disabled || wouldExceed) && !isSelected?' disabled':''}${canUseUlt?' ult-available':''}`;
+
+      const typeLabel = card.type === 'attack' ? '攻击' : card.type === 'buff' ? '增益' : '大招牌';
+      const typeClass = card.type;
+
+      cardEl.innerHTML = `
+        <div class="card-char-tag">${ally.emoji} ${ally.name}</div>
+        <div class="card-name">${card.name}</div>
+        <div class="card-type ${typeClass}">${typeLabel}</div>
+        <div class="card-desc">${card.desc}</div>
+        ${card.type !== 'ultimate' ? '<div class="card-energy">⚡ +1</div>' : '<div class="card-energy" style="color:#c9a84c">⚡ 消耗 5</div>'}
+        ${isSelected ? '<div class="card-badge">✓</div>' : ''}
+        ${canUseUlt ? '<div class="card-badge" style="background:#e74c3c">! 可用</div>' : ''}
+      `;
+
+      cardEl.onclick = () => {
+        if (!canSelect || state.isPlaying) return;
+        if (disabled && !isSelected) return;
+
+        if (isSelected) {
+          // Deselect
+          state.selectedCards = state.selectedCards.filter(s => !(s.charId === ally.id && s.cardIndex === ci));
+          renderCards();
+          return;
+        }
+
+        // Check if energy is full and trying to select a non-ultimate
+        if (energyFull && !isUlt) {
+          addLog('⚡ 能量已满！请释放大招牌或先使用已选卡牌', 'log-system');
+          return;
+        }
+
+        // Check max selections
+        if (state.selectedCards.length >= maxSelect) {
+          addLog(`⚠ 每回合最多选择 ${maxSelect} 张卡牌`, 'log-system');
+          return;
+        }
+
+        // If energy is full and this is an ultimate, deselect any normal cards first
+        if (isUlt && energyFull) {
+          state.selectedCards = state.selectedCards.filter(s => {
+            const a = state.allies.find(al => al.id === s.charId);
+            return a && a.cards[s.cardIndex] && a.cards[s.cardIndex].type === 'ultimate';
+          });
+        }
+
+        // If selecting a normal card and an ultimate was selected, deselect the ultimate
+        if (!isUlt) {
+          state.selectedCards = state.selectedCards.filter(s => s.cardType !== 'ultimate');
+        }
+
+        state.selectedCards.push({ charId: ally.id, cardIndex: ci, cardType: card.type });
+        renderCards();
+      };
+
+      grid.appendChild(cardEl);
+    });
+  });
+
+  cardHand.appendChild(grid);
+
+  if (isPlayerTurn && state.selectedCards.length > 0) {
+    btnPlay.disabled = false;
+  } else if (isPlayerTurn) {
+    btnPlay.disabled = true;
+  }
+}
+
+function renderEnergy() {
+  const dots = energyDots.querySelectorAll('.energy-dot');
+  dots.forEach((dot, i) => {
+    dot.className = 'energy-dot';
+    if (i < state.energy) {
+      dot.classList.add('filled');
+    }
+    if (state.energy >= state.maxEnergy) {
+      dot.classList.add('ult-ready');
+    }
+  });
+  energyText.textContent = `${state.energy}/${state.maxEnergy}`;
+}
+
+// ============================================================
+//  START
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
