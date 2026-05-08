@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>重返雾霭：圣梅诺克站 · 第一章</title>
+<title>重返雾霭：记忆列车</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 @keyframes fadeIn{0%{opacity:0;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
@@ -623,10 +623,128 @@ class Unit {
 }
 
 // ============================================================
+//  CHAPTER 2 - 三号站台
+// ============================================================
+
+const STORY_2 = [
+  { speaker: '', text: '站台上的灯管忽明忽暗。广播陷入沉默后，那首萨克斯乐曲的余韵还在耳膜里嗡嗡作响。', bg: '三号站台' },
+  { speaker: '', text: '「下一班列车将在午夜十二点到站。」——那个声音说。', bg: '三号站台' },
+  { speaker: '', text: '掰掰牙齿把那颗臼齿收进口袋深处，站起身来。他的目光扫过候车厅通往三号站台的走廊——灰绿色的雾霭在那里堆叠成半透明的墙壁，像凝固的烟。', bg: '三号站台' },
+  { speaker: '掰掰牙齿', text: '「三号站台的话……要从地下通道穿过去。」他用镊子指了指候车厅西侧那扇半开的铁门，「门后面大概七年没人走过了。」', bg: '三号站台' },
+  { speaker: '打打电话', text: '「你怎么知道？」', bg: '三号站台' },
+  { speaker: '掰掰牙齿', text: '「铁锈的厚度和灰尘的沉积层——我说过了，牙齿不是我最擅长看的东西。」他的虎牙在昏暗中闪了一下。', bg: '三号站台' },
+  { speaker: '写写小说', text: '「你们有没有注意到……」写写小说把羽毛笔指向候车厅天花板上的裂缝，「三号站台的方向一直没有雾涌过来。别的地方都在渗——只有那边，像被什么东西堵住了。」', bg: '三号站台' },
+  { speaker: '鞭鞭尸体', text: '「不是被堵住了。」鞭鞭尸体第一次主动开口。她的声音很低，像从很深的地方传上来的，「是被吃掉了。雾霭不敢靠近那里。」', bg: '三号站台' },
+  { speaker: '', text: '四个人沉默了一拍。然后打打电话把听筒举到耳边，拨了一个谁也没听到声音的号码。', bg: '三号站台' },
+  { speaker: '打打电话', text: '「她说得对。这条线路现在是空的——没有干扰，没有杂音。这在这栋建筑里是不正常的。所有的线路都有噪音，只有那里没有。绝对的安静——」她顿了一下，「像坟墓一样安静。」', bg: '三号站台' },
+  { speaker: '', text: '铁门被推开时发出尖锐的金属嘶鸣。门后的通道比想象中长——荧光灯管大部分已经熄灭，只有每隔五米一盏昏黄的应急灯还在坚持。墙壁上贴着七年前的海报：1999 年新年音乐会、某部电影的宣传画、寻猫启事。猫的名字叫「回音」。', bg: '三号站台' },
+  { speaker: '', text: '通道两侧每隔几步就有一扇紧闭的门——「站长室」「广播调度室」「失物招领处」。失物招领处的门缝下塞着一封信，信封上写着「给 1999 年 12 月 31 日之后的人」。', bg: '三号站台' },
+  { speaker: '写写小说', text: '「这封信是写给我们的——吗？」他蹲下来想抽出那封信，但他的手指穿过了信封，像穿过全息投影。', bg: '三号站台' },
+  { speaker: '掰掰牙齿', text: '「是记忆。——这封信、这张海报、这张寻猫启事，都是某个人留在这里的记忆。它们已经和雾霭一样淡了——等彻底透明的那天，这栋建筑就什么都不剩了。」', bg: '三号站台' },
+  { speaker: '', text: '他们继续走。走到通道尽头时，打打电话突然停了下来。', bg: '三号站台' },
+  { speaker: '打打电话', text: '「等一下。你们听到了吗？」', bg: '三号站台' },
+  { speaker: '', text: '所有人都停了下来。安静了三秒——然后他们听到了。\n不是脚步声。不是雾霭的蠕动声。\n是呼吸声——规律的、大型生物的低沉呼吸，从三号站台的方向传来。一呼一吸之间，通道尽头的铁门在微微颤动，像一个胸腔在起伏。', bg: '三号站台' },
+  { speaker: '打打电话', text: '「那边有一个活着的东西。」她的声音压得很低，「不是雾霭。——至少不完全是。」', bg: '三号站台' },
+  { speaker: '掰掰牙齿', text: '「不完全是的意思是——」', bg: '三号站台' },
+  { speaker: '打打电话', text: '「意思是它和那个螺旋标记用的是同一种——频率。」', bg: '三号站台' },
+  { speaker: '', text: '鞭鞭尸体没有说话。但她的手下意识地抬起来，触碰了一下领口下那个灰绿色的螺旋形印记。在她碰到它的那一瞬间——三号站台方向的呼吸声突然变大了。像一个沉睡中的巨兽，闻到了熟悉的气味。', bg: '三号站台' },
+  { speaker: '写写小说', text: '「这下糟了。」', bg: '三号站台' },
+  { speaker: '', text: '铁门自己打开了。', bg: '三号站台' },
+  { speaker: '', text: '三号站台的空间比一号站台大三倍——或者说，它比物理上应该有的空间大三倍。天花板消失在一片灰绿色的浓雾中，看不清有多高。铁轨延伸到十米外就断掉了——不是被炸断的，而是像画布上的线条被橡皮擦掉了一样，连带着铁轨下的枕木一起消失在半空中。', bg: '三号站台' },
+  { speaker: '', text: '铁轨断裂处的边缘漂浮着发光的数字——「23:54」「23:55」「23:56」——时间以实体的形式在空中缓缓跳动。而在断裂的铁轨上方，悬浮着一个巨大的身影。', bg: '三号站台' },
+  { speaker: '', text: '它大约两米五高，穿着一件深蓝色的、19 世纪风格的铁路制服——但制服下面没有身体，只有一团不停旋转的灰绿色浓雾。制服的领口上别着三枚徽章：一枚是列车头的浮雕，一枚是断裂的怀表，还有一枚——和鞭鞭尸体领口下一模一样的螺旋形印记。', bg: '三号站台' },
+  { speaker: '', text: '它的脸是一张售票窗口的玻璃——半透明的、裂开的玻璃，后面什么都没有。但它的声音从玻璃后面传出来，像从一台老式打印机里一个字一个字地敲出来的：', bg: '三号站台' },
+  { speaker: '🎫 售票员', text: '「欢迎来到三号站台。请出示您的车票。」', bg: '三号站台' },
+  { speaker: '打打电话', text: '「我们没有车票。」', bg: '三号站台' },
+  { speaker: '🎫 售票员', text: '「我知道。所以——请制造一张车票。」', bg: '三号站台' },
+  { speaker: '掰掰牙齿', text: '「制造？」', bg: '三号站台' },
+  { speaker: '🎫 售票员', text: '「用你们的记忆。一张车票的价格，是一段你们最珍贵的记忆。把它交给我——或者，我用别的方式来取。」', bg: '三号站台' },
+  { speaker: '', text: '售票员的「手」——由雾霭凝聚成的、戴着白手套的轮廓——抬了起来。它打了个响指。断裂的铁轨两侧，从浓雾中走出了三道人影。', bg: '三号站台' },
+  { speaker: '', text: '它们穿着不同年代的服装：一个是 1950 年代的售票员制服，一个是 1980 年代的牛仔夹克，还有一个是 1999 年常见的校服。它们的脸都是空白的——没有五官，只有售票窗口玻璃一样的半透明平面。', bg: '三号站台' },
+  { speaker: '🎫 售票员', text: '「他们也没有车票。所以——他们成为了车站的一部分。你们可以选择同样的出路。或者——」它的玻璃脸上出现了一道裂痕，像是在笑，「用实力告诉我，你们的记忆值得一张车票。」', bg: '三号站台' },
+  { speaker: '掰掰牙齿', text: '「它说要打架。」他把镊子咬在嘴里，朝前走了一步，「翻译成人话就是：它想打架。」', bg: '三号站台' },
+  { speaker: '打打电话', text: '「我听到了。」她把听筒举到耳边，「这次线路那边——」她愣了一下，声音低了下去，「线路那边有人接了。」', bg: '三号站台' },
+  { speaker: '', text: '没有人来得及问是谁接的。因为售票员已经举起了另一只手，站台的灯光瞬间变成了深红色。战斗警报一样的色调。', bg: '三号站台' },
+  { speaker: 'BATTLE', text: '', bg: '' },
+  // OUTRO
+  { speaker: '', text: '售票员的玻璃脸彻底碎裂了。那些半透明的碎片在空中悬浮了一瞬，然后化为灰绿色的雾气，被铁轨尽头的虚空吸了进去。', bg: '三号站台' },
+  { speaker: '', text: '三个无面人的身体像沙雕一样坍塌。校服最先瓦解，然后牛仔夹克，最后是 50 年代的售票员制服——它们坍塌时没有发出任何声音，像电视被关掉了画面。', bg: '三号站台' },
+  { speaker: '', text: '售票员消失的地方，留下了一样东西：一枚断裂的怀表。表盘上不是指针，而是一行细小的字——「1999.12.31 23:59」。', bg: '三号站台' },
+  { speaker: '掰掰牙齿', text: '「还剩四分钟。」他捡起那枚表。', bg: '三号站台' },
+  { speaker: '', text: '就在这时，断裂的铁轨尽头传来一声汽笛。', bg: '三号站台' },
+  { speaker: '', text: '不是从远处传来的——是从「消失」的那段铁轨方向传来的。仿佛铁轨并没有真的消失，只是被某种力量遮住了。而现在，那层遮蔽正在变薄。', bg: '三号站台' },
+  { speaker: '', text: '汽笛声再次响起，比上一次更近。然后，他们看到了光——从铁轨断裂处的虚空中透出来的、灰绿色的、跳动着的、像心跳一样有节奏的亮光。', bg: '三号站台' },
+  { speaker: '', text: '一列火车的轮廓正在从虚空中浮现。它的车头是一台老式蒸汽机车——但它的锅炉里燃烧的不是煤，而是密密麻麻的发光的文字和画面。每一个窗口都透出不同的场景：有人在过生日，有人在葬礼上哭泣，有人在站台上接吻，有人在雨中等车。', bg: '三号站台' },
+  { speaker: '', text: '那是一列由记忆组成的列车。', bg: '三号站台' },
+  { speaker: '写写小说', text: '「……」他张了张嘴，没说出话来。羽毛笔在颤抖。过了好一会儿，他才找到声音：「这是我见过的最美的东西。」', bg: '三号站台' },
+  { speaker: '打打电话', text: '「也是最危险的。」她的手攥紧了听筒，「那列火车是活的。而且——」她转头看向鞭鞭尸体，「它在叫她。」', bg: '三号站台' },
+  { speaker: '', text: '鞭鞭尸体站在最前面。她的斗篷被从虚空吹来的风掀动。灰白色的眼睛第一次出现了某种情绪——不是恐惧，不是悲伤，而是一种……认出了什么东西的、复杂的平静。她领口下的螺旋印记在发光。', bg: '三号站台' },
+  { speaker: '鞭鞭尸体', text: '「我该上车了。」她说。语气很淡，像在说「我该走了」一样平常。', bg: '三号站台' },
+  { speaker: '打打电话', text: '「你——」', bg: '三号站台' },
+  { speaker: '🎫 广播', text: '「1999 年 12 月 31 日——23 点 59 分。开往——的列车即将到站。请手持车票的乘客——」', bg: '三号站台' },
+  { speaker: '', text: '广播没有说完。因为掰掰牙齿突然朝前走去，站在了鞭鞭尸体旁边。', bg: '三号站台' },
+  { speaker: '掰掰牙齿', text: '「那就一起去。反正我也没有别的地方要去。而且——」他转头笑了一下，虎牙在蒸汽机车的灰绿色光芒中亮了一下，「我还没看完你的牙呢。你的牙——有故事。」', bg: '三号站台' },
+  { speaker: '', text: '鞭鞭尸体没有回答。但是她的嘴角——那是所有人第一次看到她的嘴角——微微动了一下。', bg: '三号站台' },
+  { speaker: '打打电话', text: '「……」她把听筒放下来，又举起来。最后她只说了一句：「线路那边的人让我转告你们——『下一站比这里更暗，但有人在那里等你们。』」', bg: '三号站台' },
+  { speaker: '', text: '她顿了顿。', bg: '三号站台' },
+  { speaker: '打打电话', text: '「她说她叫——回音。」', bg: '三号站台' },
+  { speaker: '', text: '蒸汽机车的汽笛第三次响起。列车的门无声地滑开。灰绿色的光芒从车厢里涌出来，像一条铺向未知的路。', bg: '三号站台' },
+  { speaker: '写写小说', text: '「我还没想好下一章怎么写。」他收起笔记本，跟上了队伍，「但——大概有个方向了。」', bg: '三号站台' },
+  { speaker: '', text: '四个人的影子被列车的光芒拉长，在站台地面上汇合在一起。', bg: '三号站台' },
+  { speaker: '', text: '然后，他们走进了那列由记忆组成的列车。', bg: '三号站台' },
+  { speaker: '', text: '门在他们身后合上。汽笛声拉长——模糊——像沉入水中。', bg: '三号站台' },
+  { speaker: '', text: '站台上恢复了寂静。断裂的铁轨重新被灰绿色的雾气覆盖。那枚怀表——掰掰牙齿带走了它。', bg: '三号站台' },
+  { speaker: '', text: '只剩下失物招领处门缝下那封信，还静静地躺在那里——信封上的字，不知什么时候变成了：', bg: '三号站台' },
+  { speaker: '', text: '「给 1999 年 12 月 31 日之后的人——谢谢你们记得我。」', bg: '三号站台' },
+  { speaker: 'END', text: '', bg: '' }
+];
+
+const CHARACTERS_2 = [
+  { ...CHARACTERS[0], hp: 900, maxHp: 900, atk: 110 },
+  { ...CHARACTERS[1], hp: 850, maxHp: 850, atk: 100 },
+  { ...CHARACTERS[2], hp: 800, maxHp: 800, atk: 95 },
+  { ...CHARACTERS[3], hp: 950, maxHp: 950, atk: 105 }
+];
+
+const ENEMIES_2 = [
+  {
+    id: 'elite',
+    name: '雾霭售票员',
+    emoji: '👺',
+    hp: 2800,
+    maxHp: 2800,
+    atk: 90,
+    def: 25,
+    isElite: true
+  },
+  {
+    id: 'minion1',
+    name: '记忆乘客·左',
+    emoji: '👤',
+    hp: 800,
+    maxHp: 800,
+    atk: 55,
+    def: 12,
+    isElite: false
+  },
+  {
+    id: 'minion2',
+    name: '记忆乘客·右',
+    emoji: '👤',
+    hp: 800,
+    maxHp: 800,
+    atk: 55,
+    def: 12,
+    isElite: false
+  }
+];
+
+// ============================================================
 //  GAME STATE
 // ============================================================
 
 let state = {
+  chapter: 1,
   phase: 'story',
   storyIndex: 0,
   allies: [],
@@ -694,6 +812,20 @@ function showUltFlash() {
 }
 
 // ============================================================
+//  HELPERS
+// ============================================================
+
+function getStory() { return state.chapter === 1 ? STORY : STORY_2; }
+function getEnemies() { return state.chapter === 1 ? ENEMIES : ENEMIES_2; }
+function getCharacters() { return state.chapter === 1 ? CHARACTERS : CHARACTERS_2; }
+function getChapterTitle() { return state.chapter === 1 ? '圣梅诺克站 · 第一章' : '三号站台 · 第二章'; }
+function getChapterSubtitle() { return state.chapter === 1 ? '1999 年 12 月 31 日，深夜 11 点 47 分。' : '「下一站——1999。」'; }
+
+function updateHeader() {
+  document.querySelector('.header-title').textContent = `重返雾霭 · ${getChapterTitle()}`;
+}
+
+// ============================================================
 //  INIT
 // ============================================================
 
@@ -709,6 +841,7 @@ function init() {
   state.skipTyping = false;
 
   clearLog();
+  updateHeader();
   showStory();
 }
 
@@ -721,10 +854,11 @@ function showStory() {
   storyOverlay.classList.add('active');
   transition.classList.remove('active');
 
+  const story = getStory();
   const idx = state.storyIndex;
-  if (idx >= STORY.length) return;
+  if (idx >= story.length) return;
 
-  const s = STORY[idx];
+  const s = story[idx];
 
   if (s.speaker === 'BATTLE') {
     startBattle();
@@ -783,13 +917,15 @@ function startBattle() {
   state.energy = 0;
   state.selectedCards = [];
 
-  state.allies = CHARACTERS.map(c => new Unit({
+  const chars = getCharacters();
+  state.allies = chars.map(c => new Unit({
     id: c.id, name: c.name, title: c.title, emoji: c.emoji,
     hp: c.hp, maxHp: c.maxHp, atk: c.atk, def: c.def,
     cards: c.cards.map(card => ({...card}))
   }, true));
 
-  state.enemies = ENEMIES.map(e => new Unit({
+  const enemies = getEnemies();
+  state.enemies = enemies.map(e => new Unit({
     id: e.id, name: e.name, emoji: e.emoji,
     hp: e.hp, maxHp: e.maxHp, atk: e.atk, def: e.def,
     isElite: e.isElite
@@ -799,8 +935,13 @@ function startBattle() {
   battleScene.classList.add('active');
   clearLog();
 
-  addLog('⚔ 战斗开始！雾霭缝合怪与它的傀儡出现了。', 'log-system');
-  addLog('「咬合要整齐。」——掰掰牙齿把镊子咬在嘴里，冲了出去。', 'log-system');
+  if (state.chapter === 1) {
+    addLog('⚔ 战斗开始！雾霭缝合怪与它的傀儡出现了。', 'log-system');
+    addLog('「咬合要整齐。」——掰掰牙齿把镊子咬在嘴里，冲了出去。', 'log-system');
+  } else {
+    addLog('⚔ 战斗开始！雾霭售票员召集了记忆乘客。', 'log-system');
+    addLog('「没有车票的人——就用拳头来买吧。」', 'log-system');
+  }
 
   renderAll();
   btnPlay.disabled = false;
@@ -1001,10 +1142,16 @@ function checkWin() {
   const alive = state.enemies.filter(e => !e.isDead());
   if (alive.length === 0) {
     state.phase = 'victory';
-    addLog('🏆 战斗胜利！雾霭缝合怪被击败！', 'log-ult');
+    if (state.chapter === 1) {
+      addLog('🏆 战斗胜利！雾霭缝合怪被击败！', 'log-ult');
+    } else {
+      addLog('🏆 战斗胜利！雾霭售票员被击败！', 'log-ult');
+    }
     setTimeout(() => {
       transitionTitle.textContent = '· 胜 利 ·';
-      transitionSub.textContent = '雾霭暂时退却，但秘密才刚刚浮现……';
+      transitionSub.textContent = state.chapter === 1
+        ? '雾霭暂时退却，但秘密才刚刚浮现……'
+        : '售票员消失了——记忆列车正在驶来。';
       transitionBtn.textContent = '继续剧情';
       transition.classList.add('active');
       window._transitionCb = () => {
@@ -1049,14 +1196,30 @@ function onTransitionClick() {
 function showEndScreen() {
   battleScene.classList.remove('active');
   storyOverlay.classList.remove('active');
-  transitionTitle.textContent = '· 第 一 章 · 完';
-  transitionSub.textContent = '「下一班列车将在午夜十二点到站。请手持车票的乘客——」';
-  transitionBtn.textContent = '重新开始';
-  transition.classList.add('active');
-  window._transitionCb = () => {
-    transition.classList.remove('active');
-    init();
-  };
+
+  if (state.chapter === 1) {
+    transitionTitle.textContent = '· 第 一 章 · 完';
+    transitionSub.textContent = '「下一班列车将在午夜十二点到站。请手持车票的乘客——」';
+    transitionBtn.textContent = '进 入 第 二 章';
+    transition.classList.add('active');
+    window._transitionCb = () => {
+      transition.classList.remove('active');
+      state.chapter = 2;
+      state.storyIndex = 0;
+      init();
+    };
+  } else {
+    transitionTitle.textContent = '· 第 二 章 · 完';
+    transitionSub.textContent = '「下一站——1999。」记忆列车载着他们驶入黑暗。';
+    transitionBtn.textContent = '重新开始';
+    transition.classList.add('active');
+    window._transitionCb = () => {
+      transition.classList.remove('active');
+      state.chapter = 1;
+      state.storyIndex = 0;
+      init();
+    };
+  }
 }
 
 // ============================================================
